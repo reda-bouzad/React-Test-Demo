@@ -1,39 +1,37 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom'; 
+import './Detail.css';
 
 function Detail() {
-  const { id } = useParams();
-  const [article, setArticle] = useState(null);
+    const { id } = useParams();
+    const [article, setArticle] = useState(null);
+    const navigate = useNavigate();
 
-  useEffect(() => {
-    fetch(`/data.json`) // Adjusted path to match a local JSON file
-     .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-     .then(data => {
-        const articleData = data.find(item => item.id === id);
-        if (articleData) {
-          setArticle(articleData);
-        } else {
-          console.error(`Article with id ${id} not found`);
-        }
-      })
-     .catch(error => console.error('There was a problem with your fetch operation:', error));
-  }, [id]); // Dependency array includes id to refetch if it changes
+    useEffect(() => {
+        fetch(`/data.json`)
+           .then(response => {
+                return response.json();
+            })
+           .then(data => {
+                const articleData = data.find(item => item.id === id);
+                if (articleData) {
+                    setArticle(articleData);
+                }
+            });
+    }, [id]);
 
-  if (!article) {
-    return <div>Loading...</div>;
-  }
+    if (!article) {
+        return <div>Loading...</div>;
+    }
 
-  return (
-    <div className="detail">
-      <h1>{article.title}</h1>
-      <p>{article.text}</p>
-    </div>
-  );
+    return (
+        <div className="detail">
+            <h1>{article.title}</h1>
+            <img width={300} src={article.image} alt="" srcset="" />
+            <p>{article.text}</p>
+            <button onClick={() => navigate('/')}>Home Page</button>
+        </div>
+    );
 }
 
 export default Detail;
