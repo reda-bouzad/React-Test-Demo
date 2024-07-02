@@ -1,11 +1,11 @@
 import './Card.css';
 import { useNavigate } from 'react-router-dom';
 
-function Card({ id, image, title, text }) { // Destructure props to include id
+function Card({ id, image, title, text }) {
     const navigate = useNavigate();
 
     const handleClick = () => {
-        navigate(`/detail/${id}`); // Use the passed id for navigation
+        navigate(`/detail/${id}`); 
     };
 
     return (

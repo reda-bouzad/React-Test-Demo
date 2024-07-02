@@ -7,7 +7,7 @@ function List() {
 
     const getData = () => {
         fetch('data.json')
-            .then(response => response.json())
+            .then(response => response.json())  
             .then(myJson => setArticles(myJson));
     };
 
